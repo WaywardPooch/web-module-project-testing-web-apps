@@ -13,7 +13,7 @@ test("renders the contact form header", () => {
   render(<ContactForm />);
 
   // Act/Assert (look for and expect presense of header text in form)
-  const formHeaderText = screen.queryByText(/contact form/i);
+  const formHeaderText = screen.getByText(/contact form/i);
   expect(formHeaderText).toBeInTheDocument();
 });
 
@@ -28,7 +28,7 @@ test("renders ONE error message if user enters less then 5 characters into first
 
   // Assert (is the error message for firstname present)
   await waitFor(() => {
-    const firstnameError = screen.queryByText(
+    const firstnameError = screen.getByText(
       /firstname must have at least 5 characters./i
     );
     expect(firstnameError).toBeInTheDocument();
@@ -44,11 +44,11 @@ test("renders THREE error messages if user enters no values into any fields.", a
   userEvent.click(submitButton);
 
   // Assert (are there three error messages showing up)
-  const minLettersError = screen.queryByText(
+  const minLettersError = screen.getByText(
     /must have at least 5 characters./i
   );
-  const validEmailError = screen.queryByText(/must be a valid email address./i);
-  const requiredFieldError = screen.queryByText(/is a required field./i);
+  const validEmailError = screen.getByText(/must be a valid email address./i);
+  const requiredFieldError = screen.getByText(/is a required field./i);
 
   expect(minLettersError).toBeInTheDocument();
   expect(validEmailError).toBeInTheDocument();
@@ -70,7 +70,7 @@ test("renders ONE error message if user enters a valid first name and last name 
   userEvent.click(submitButton);
 
   // Assert (does the email invalid error show up)
-  const validEmailError = screen.queryByText(/must be a valid email address./i);
+  const validEmailError = screen.getByText(/must be a valid email address./i);
   expect(validEmailError).toBeInTheDocument();
 });
 
@@ -86,11 +86,22 @@ test('renders "email must be a valid email address" if an invalid email is enter
   userEvent.type(emailInput, testValue);
 
   // Assert (is the invalid email error popping up)
-  const validEmailError = screen.queryByText(/must be a valid email address./i);
+  const validEmailError = screen.getByText(/must be a valid email address./i);
   expect(validEmailError).toBeInTheDocument();
 });
 
-test('renders "lastName is a required field" if an last name is not entered and the submit button is clicked', async () => {});
+test('renders "lastName is a required field" if an last name is not entered and the submit button is clicked', async () => {
+  // Arrange (render the form)
+  render(<ContactForm />);
+
+  // Act (user clicks submit without filling in last name)
+  const submitButton = screen.getByRole("button");
+  userEvent.click(submitButton);
+
+  // Assert (is the lastname required error popping up)
+  const lastnameError = screen.getByText(/lastname is a required field/i);
+  expect(lastnameError).toBeInTheDocument();
+});
 
 test("renders all firstName, lastName and email text when submitted. Does NOT render message if message is not submitted.", async () => {});
 
