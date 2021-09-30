@@ -132,36 +132,36 @@ test("renders all firstName, lastName and email text when submitted. Does NOT re
 });
 
 test("renders all fields text when all fields are submitted.", async () => {
-    // Arrange (render the form)
-    render(<ContactForm />);
+  // Arrange (render the form)
+  render(<ContactForm />);
 
-    // Act (user fills in all fields and clicks submit)
-    const testValues = {
-      firstname: "Johnny",
-      lastname: "Snow",
-      email: "lordcommander@castleblack.com",
-      message: "Test Message."
-    };
-    const firstnameInput = screen.getByPlaceholderText(/edd/i);
-    const lastnameInput = screen.getByPlaceholderText(/burke/i);
-    const emailInput = screen.getByPlaceholderText(/bluebill1049@hotmail.com/i);
-    const messageInput = screen.getByLabelText("Message");
-    const submitButton = screen.getByRole("button");
-  
-    userEvent.type(firstnameInput, testValues.firstname);
-    userEvent.type(lastnameInput, testValues.lastname);
-    userEvent.type(emailInput, testValues.email);
-    userEvent.type(messageInput, testValues.message);
-    userEvent.click(submitButton);
-  
-    // Assert (check if testValues are on screen, and if message is missing)
-    const submittedFirstname = screen.getByTestId("firstnameDisplay");
-    const submittedLastname = screen.getByTestId("lastnameDisplay");
-    const submittedEmail = screen.getByTestId("emailDisplay");
-    const submittedMessage = screen.queryByTestId("messageDisplay");
-  
-    expect(submittedFirstname).toBeInTheDocument();
-    expect(submittedLastname).toBeInTheDocument();
-    expect(submittedEmail).toBeInTheDocument();
-    expect(submittedMessage).toBeInTheDocument();
+  // Act (user fills in all fields and clicks submit)
+  const testValues = {
+    firstname: "Johnny",
+    lastname: "Snow",
+    email: "lordcommander@castleblack.com",
+    message: "Test Message.",
+  };
+  const firstnameInput = screen.getByPlaceholderText(/edd/i);
+  const lastnameInput = screen.getByPlaceholderText(/burke/i);
+  const emailInput = screen.getByPlaceholderText(/bluebill1049@hotmail.com/i);
+  const messageInput = screen.getByLabelText("Message");
+  const submitButton = screen.getByRole("button");
+
+  userEvent.type(firstnameInput, testValues.firstname);
+  userEvent.type(lastnameInput, testValues.lastname);
+  userEvent.type(emailInput, testValues.email);
+  userEvent.type(messageInput, testValues.message);
+  userEvent.click(submitButton);
+
+  // Assert (check if testValues are on screen, and if message is missing)
+  const submittedFirstname = screen.getByTestId("firstnameDisplay");
+  const submittedLastname = screen.getByTestId("lastnameDisplay");
+  const submittedEmail = screen.getByTestId("emailDisplay");
+  const submittedMessage = screen.queryByTestId("messageDisplay");
+
+  expect(submittedFirstname).toBeInTheDocument();
+  expect(submittedLastname).toBeInTheDocument();
+  expect(submittedEmail).toBeInTheDocument();
+  expect(submittedMessage).toBeInTheDocument();
 });
